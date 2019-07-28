@@ -1,6 +1,6 @@
 # Where to start
 
-Please visit *tests/e2e/* and look at *\*.feature* files to see what's the expected
+Please visit *tests/e2e/features* and look at *\*.feature* files to see what's the expected
 behaviour of *poker* script.
 
 ## How to run tests
