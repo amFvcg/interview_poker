@@ -39,7 +39,7 @@ def get_hand(cards):
                 sorted(cards), lambda x: x)], reverse=True)
 
 
-def get_cards(card_string):
+def get_cards(card_string: str):
     return sorted([ALLOWED_SYMBOLS.get(i) for i in card_string])
 
 
@@ -67,7 +67,7 @@ def validate_input(input_string: str):
 @click.command()
 @click.argument('lhand')
 @click.argument('rhand')
-def main(lhand, rhand):
+def main(lhand: str, rhand: str):
     if not (validate_input(lhand) and validate_input(rhand)):
         print(f'Invalid hand symbol, should be only one of {ALLOWED_SYMBOLS}',
               file=sys.stderr)

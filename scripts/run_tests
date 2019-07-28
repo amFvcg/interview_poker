@@ -1,0 +1,16 @@
+#!/bin/sh
+[[ -n "$VERBOSE" ]] && set -x
+
+VENV_DIR=$(mktemp -d)
+
+trap 'rm -rfv "${VENV_DIR}"' EXIT
+
+
+[[ -d ${VENV_DIR} ]] && 
+python3 -m venv ${VENV_DIR} && 
+source ${VENV_DIR}/bin/activate &&
+python setup.py develop &&
+python setup.py pytest && 
+for feature in $(find tests -name '*.feature'); do
+    python setup.py behave_test --args=$feature || exit 1
+done

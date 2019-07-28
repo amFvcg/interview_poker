@@ -18,7 +18,7 @@ class cProfileCommand(distutils.cmd.Command):
 
     def run(self):
         """Run command."""
-        command = ['python3', '-c', SCRIPT_NAME]
+        command = ['python3', '-m', 'cProfile', 'tests/perf/perf_test.py']
         self.announce(
             'Running command: %s' % str(command),
             level=distutils.log.INFO)
@@ -34,9 +34,11 @@ setup(
     ],
     setup_requires=[
         'pytest-runner',
+        'behave',
     ],
-    tests_requires=[
+    tests_require=[
         'pytest',
+        'behave',
     ],
     entry_points='''
         [console_scripts]
