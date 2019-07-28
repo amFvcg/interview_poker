@@ -7,7 +7,7 @@ Feature: bad input handling
 Feature: poker winner checker
     Scenario Outline: All possible cases
         Given <first_hand> and <second_hand> hands
-        When script is run
+        When poker script is run
         Then expected output is equal to <expected_output>
 
         Examples: Tie

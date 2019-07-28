@@ -32,9 +32,15 @@ setup(
     install_requires=[
         'Click',
     ],
+    setup_requires=[
+        'pytest-runner',
+    ],
+    tests_requires=[
+        'pytest',
+    ],
     entry_points='''
         [console_scripts]
-        poker=poker:cli
+        poker=poker:main
     ''',
     cmdclass={
         'cProfile': cProfileCommand
