@@ -1,13 +1,8 @@
-Feature: bad input handling
-    Scenario: Invalid number of arguments
-        Given 
-        When
-        Then
-
 Feature: poker winner checker
     Scenario Outline: All possible cases
         Given <first_hand> and <second_hand> hands
         When poker script is run
+        Then it should succeed
         Then expected output is equal to <expected_output>
 
         Examples: Tie
