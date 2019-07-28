@@ -1,4 +1,6 @@
 import pytest
+from poker import GroupEntry as GE
+from poker import CompResult
 
 def test_get_hand():
     from poker import get_hand
@@ -10,21 +12,21 @@ def test_get_hand():
 
 
 test_data_compare_hands = [
-    ([(2, 'A'), (1, '5'), (1, '3'), (1, '4')],
-     [(2, 'A'), (1, '2'), (1, '3'), (1, '4')],
-     1),
-    ([(2, 'A'), (1, '2'), (1, '3'), (1, '4')],
-     [(2, 'A'), (1, '5'), (1, '3'), (1, '4')],
-     -1),
-    ([(2, 'A'), (1, '2'), (1, '3'), (1, '4')],
-     [(2, 'A'), (1, '2'), (1, '3'), (1, '4')],
-     0),
-    ([(3, '2'), (1, 'A'), (1, '3'), (1, '4')],
-     [(2, 'A'), (1, '2'), (1, '3'), (1, '4')],
-     1),
-    ([(3, 10), (2, 13)],
-     [(3, 13), (2, 10)],
-     -1),
+    ([GE(2, 'A'), GE(1, '5'), GE(1, '3'), GE(1, '4')],
+     [GE(2, 'A'), GE(1, '2'), GE(1, '3'), GE(1, '4')],
+     CompResult.FirstWon),
+    ([GE(2, 'A'), GE(1, '2'), GE(1, '3'), GE(1, '4')],
+     [GE(2, 'A'), GE(1, '5'), GE(1, '3'), GE(1, '4')],
+     CompResult.SecondWon),
+    ([GE(2, 'A'), GE(1, '2'), GE(1, '3'), GE(1, '4')],
+     [GE(2, 'A'), GE(1, '2'), GE(1, '3'), GE(1, '4')],
+     CompResult.Tie),
+    ([GE(3, '2'), GE(1, 'A'), GE(1, '3'), GE(1, '4')],
+     [GE(2, 'A'), GE(1, '2'), GE(1, '3'), GE(1, '4')],
+     CompResult.FirstWon),
+    ([GE(3, 10), GE(2, 13)],
+     [GE(3, 13), GE(2, 10)],
+     CompResult.SecondWon),
 ]
 
 

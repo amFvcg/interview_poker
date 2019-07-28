@@ -1,8 +1,11 @@
 import click
 import sys
 
-from enum import IntEnum
+from enum import Enum, IntEnum
 from itertools import groupby
+from collections import namedtuple
+
+GroupEntry = namedtuple('GroupEntry', ['count', 'symbol'])
 
 
 class AllowedSymbols(IntEnum):
@@ -26,8 +29,13 @@ ALLOWED_SYMBOLS = dict(zip('23456789TJQKA', list(AllowedSymbols)))
 HAND_SIZE = 5
 
 
+class CompResult(Enum):
+    FirstWon = 'First hand wins!'
+    SecondWon = 'Second hand wins!'
+    Tie = 'It\'s a tie!'
+
 def get_hand(cards):
-    return sorted([(len(list(i[1])), i[0]) for i in groupby(
+    return sorted([GroupEntry(len(list(i[1])), i[0]) for i in groupby(
                 sorted(cards), lambda x: x)], reverse=True)
 
 
@@ -36,17 +44,19 @@ def get_cards(card_string):
 
 
 def compare(lhand, rhand):
-    lcomposition = [i[0] for i in lhand]
-    rcomposition = [i[0] for i in rhand]
+    lcomposition = [i.count for i in lhand]
+    rcomposition = [i.count for i in rhand]
+    # TRICKY: first check by count of cards
     if lcomposition > rcomposition:
-        return 1
+        return CompResult.FirstWon
     if lcomposition < rcomposition:
-        return -1
+        return CompResult.SecondWon
+    # TRICKY: then check by card values itself
     if lhand > rhand:
-        return 1
+        return CompResult.FirstWon
     if lhand < rhand:
-        return -1
-    return 0
+        return CompResult.SecondWon
+    return CompResult.Tie
 
 
 def validate_input(input_string: str):
@@ -64,12 +74,7 @@ def main(lhand, rhand):
         return 1
     lhand = get_cards(lhand)
     rhand = get_cards(rhand)
-    return_string = {
-        1: 'First hand wins!',
-        0: 'It\'s a tie!',
-        -1: 'Second hand wins!'
-    }
-    print(return_string[compare(get_hand(lhand), get_hand(rhand))])
+    print(compare(get_hand(lhand), get_hand(rhand)).value)
 
 
 if __name__ == '__main__':
